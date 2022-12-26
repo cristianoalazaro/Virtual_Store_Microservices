@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VShop.ProductApi", "VShop.ProductApi\VShop.ProductApi.csproj", "{C9D7F57A-1878-4098-841E-31392D565936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VShop.ProductApi", "VShop.ProductApi\VShop.ProductApi.csproj", "{C9D7F57A-1878-4098-841E-31392D565936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VShop.Web", "VShop.Web\VShop.Web.csproj", "{0CFA752E-12C9-4363-ACAC-81DFA3EA13D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C9D7F57A-1878-4098-841E-31392D565936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D7F57A-1878-4098-841E-31392D565936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D7F57A-1878-4098-841E-31392D565936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CFA752E-12C9-4363-ACAC-81DFA3EA13D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CFA752E-12C9-4363-ACAC-81DFA3EA13D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CFA752E-12C9-4363-ACAC-81DFA3EA13D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CFA752E-12C9-4363-ACAC-81DFA3EA13D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

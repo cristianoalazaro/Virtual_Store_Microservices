@@ -71,7 +71,7 @@ namespace VShop.ProductApi.Controllers
 
         }
 
-        [HttpDelete("{id:int")]
+        [HttpDelete("{id:int}")]
         public async Task<ActionResult<CategoryDTO>> Delete(int id)
         {
             var categoryDto = await GetById(id);
