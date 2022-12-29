@@ -18,9 +18,24 @@ namespace VShop.Web.Services
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public Task<IEnumerable<ProductViewModel>> GetAllProducts()
+        public async Task<IEnumerable<ProductViewModel>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient("ProductApi");
+
+            using (var response = await client.GetAsync(apiEndpoint))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    productsVM = await JsonSerializer
+                                .DeserializeAsync<IEnumerable<ProductViewModel>>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return productsVM;
         }
 
         public Task<ProductViewModel> FindProductById(int id)
