@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
+using System.Text.Unicode;
 using VShop.Web.Models;
 using VShop.Web.Services.Contracts;
 
@@ -26,7 +28,7 @@ namespace VShop.Web.Services
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    var apiResponse = await response.Content.ReadAsStringAsync();
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
                     productsVM = await JsonSerializer
                                 .DeserializeAsync<IEnumerable<ProductViewModel>>(apiResponse, _options);
                 }
@@ -38,24 +40,81 @@ namespace VShop.Web.Services
             return productsVM;
         }
 
-        public Task<ProductViewModel> FindProductById(int id)
+        public async Task<ProductViewModel> FindProductById(int id)
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient("ProductApi");
+
+            using (var response = await client.GetAsync(apiEndpoint + id))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+                    productVM = await JsonSerializer
+                               .DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return productVM;
         }
 
-        public Task<ProductViewModel> CreateProduct(ProductViewModel productVM)
+        public async Task<ProductViewModel> CreateProduct(ProductViewModel productVM)
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient("ProductApi");
+
+            StringContent content = new StringContent(JsonSerializer.Serialize(productVM),
+                                    Encoding.UTF8, "application/json");
+
+            using(var response = await client.PostAsync(apiEndpoint, content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+                    productVM = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return productVM;
         }
 
-        public Task<ProductViewModel> UpdateProduct(ProductViewModel productVM)
+        public async Task<ProductViewModel> UpdateProduct(ProductViewModel productVM)
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient("ProductApi");
+            ProductViewModel productUpdated = new ProductViewModel();
+
+            using (var response = await client.PutAsJsonAsync(apiEndpoint, productVM))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+                    productUpdated = await JsonSerializer
+                                    .DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return productUpdated;
         }
 
-        public Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var client = _clientFactory.CreateClient("ProductApi");
+
+            using(var response = await client.DeleteAsync(apiEndpoint + id))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
