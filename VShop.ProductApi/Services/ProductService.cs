@@ -32,6 +32,7 @@ namespace VShop.ProductApi.Services
         {
             var productEntity = _mapper.Map<Product>(productDTO);
             await _productRepository.Create(productEntity);
+            productDTO.Id = productEntity.Id;
         }
 
         public async Task UpdateProduct(ProductDTO productDTO)
