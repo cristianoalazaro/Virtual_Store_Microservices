@@ -1,4 +1,4 @@
-namespace VShopIdentityServer.Models
+namespace VShop.IdentityServer.Models
 {
     public class ErrorViewModel
     {

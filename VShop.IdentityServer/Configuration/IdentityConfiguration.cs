@@ -1,7 +1,7 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
-namespace VShopIdentityServer.Configuration;
+namespace VShop.IdentityServer.Configuration;
 
 public class IdentityConfiguration
 {
@@ -13,43 +13,43 @@ public class IdentityConfiguration
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Email(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>
         {
-            //VShop é a aplicação web que vai acessar o IdentityServer para obter o token
-            new ApiScope("vshop", "VShop Server"),
+            //VShop é aplicação Web que vai acessar o IdentityServer para obter o token
+            new ApiScope("VShop", "VShop Server"),
             new ApiScope(name: "read", "Read data."),
             new ApiScope(name: "write", "Write data."),
-            new ApiScope(name: "delete", "Delete data.")
+            new ApiScope(name: "delete", "Delete data."),
         };
 
-    public static IEnumerable<Client> Clients =>
+    public static IEnumerable<Client> clients =>
         new List<Client>
         {
             //Cliente genérico
             new Client
             {
                 ClientId = "client",
-                ClientSecrets = {new Secret("abcdefghij#1234567890".Sha256()) },
-                AllowedGrantTypes = GrantTypes.ClientCredentials, //Precisa das credenciais do cliente
-                AllowedScopes = {"read", "write", "profile"}
+                ClientSecrets = {new Secret("ehumasenhacomplicado#123456".Sha256())},
+                AllowedGrantTypes = GrantTypes.ClientCredentials, //Precisa das credenciais do usuário
+                AllowedScopes = {"read", "write", "profile"},
             },
+            //Cliente VShop
             new Client
             {
                 ClientId = "vshop",
-                ClientSecrets = {new Secret("abcdefghij#1234567890".Sha256())},
+                ClientSecrets = {new Secret("ehumasenhacomplicado#123456".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code, //Via código
-                RedirectUris = {"https://localhost:7165/signin-oidc"}, //login
-                PostLogoutRedirectUris = {"https://localhost:7165/signout-callback-oidc"}, //logout
+                RedirectUris = { "https://localhost:7188/signin-oidc" }, //Login
+                PostLogoutRedirectUris = { "https://localhost:7188/signout-callback-oidc" }, //Logout
                 AllowedScopes = new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
-                    "vshop"
                 }
             }
         };

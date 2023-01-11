@@ -18,7 +18,7 @@ using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Test;
 using Microsoft.AspNetCore.Identity;
-using VShopIdentityServer.Data;
+using VShop.IdentityServer.Data;
 
 namespace IdentityServerHost.Quickstart.UI
 {
@@ -43,16 +43,15 @@ namespace IdentityServerHost.Quickstart.UI
         private readonly IEventService _events;
 
         public AccountController(
-            IIdentityServerInteractionService interaction,
+           IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
             IIdentityProviderStore identityProviderStore,
             IEventService events,
-            //TestUserStore users = null)
-
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager
+            //TestUserStore users = null
             )
         {
             // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
@@ -126,23 +125,21 @@ namespace IdentityServerHost.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                /*if (_users.ValidateCredentials(model.Username, model.Password))
-                {
-                    var user = _users.FindByUsername(model.Username);*/
-
+                //// validate username/password against in-memory store
+                //if (_users.ValidateCredentials(model.Username, model.Password))
+                //{
+                //    var user = _users.FindByUsername(model.Username);
                 var result = await _signInManager.PasswordSignInAsync(
-                    model.Username,
-                    model.Password,
-                    model.RememberLogin,
-                    lockoutOnFailure: false);
+                  model.Username,
+                  model.Password,
+                  model.RememberLogin,
+                  lockoutOnFailure: false);
 
-                //Validate username/password against in-memory store
+                // validate username/password against in-memory store
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.Client.ClientId));
-
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -193,17 +190,16 @@ namespace IdentityServerHost.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId: context?.Client.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.Client.ClientId));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 
             // something went wrong, show form with error
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
-
         }
 
-
+        
         /// <summary>
         /// Show logout page
         /// </summary>
@@ -237,7 +233,6 @@ namespace IdentityServerHost.Quickstart.UI
             {
                 // delete local authentication cookie
                 //await HttpContext.SignOutAsync();
-
                 await _signInManager.SignOutAsync();
 
                 // raise the logout event
