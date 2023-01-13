@@ -18,10 +18,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "oide";
+    options.DefaultChallengeScheme = "oidc";
 })
     .AddCookie("Cookies", c => c.ExpireTimeSpan = TimeSpan.FromMinutes(10))
-    .AddOpenIdConnect("oide", options =>
+    .AddOpenIdConnect("oidc", options =>
     {
         options.Authority = builder.Configuration["ServiceUri:IdentityServer"];
         options.GetClaimsFromUserInfoEndpoint = true;

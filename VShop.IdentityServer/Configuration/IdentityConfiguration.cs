@@ -33,7 +33,7 @@ public class IdentityConfiguration
             new Client
             {
                 ClientId = "client",
-                ClientSecrets = {new Secret("ehumasenhacomplicado#123456".Sha256())},
+                ClientSecrets = {new Secret("abcdefghij#1234567890".Sha256())},
                 AllowedGrantTypes = GrantTypes.ClientCredentials, //Precisa das credenciais do usuário
                 AllowedScopes = {"read", "write", "profile"},
             },
@@ -41,7 +41,7 @@ public class IdentityConfiguration
             new Client
             {
                 ClientId = "vshop",
-                ClientSecrets = {new Secret("ehumasenhacomplicado#123456".Sha256())},
+                ClientSecrets = {new Secret("abcdefghij#1234567890".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code, //Via código
                 RedirectUris = { "https://localhost:7188/signin-oidc" }, //Login
                 PostLogoutRedirectUris = { "https://localhost:7188/signout-callback-oidc" }, //Logout
