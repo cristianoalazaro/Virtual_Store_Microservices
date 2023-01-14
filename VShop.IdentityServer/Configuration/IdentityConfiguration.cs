@@ -43,8 +43,8 @@ public class IdentityConfiguration
                 ClientId = "vshop",
                 ClientSecrets = {new Secret("abcdefghij#1234567890".Sha256())},
                 AllowedGrantTypes = GrantTypes.Code, //Via código
-                RedirectUris = { "https://localhost:7188/signin-oidc" }, //Login
-                PostLogoutRedirectUris = { "https://localhost:7188/signout-callback-oidc" }, //Logout
+                RedirectUris = { "https://localhost:7008/signin-oidc", "http://localhost:5119/signin-oidc" }, //Login
+                PostLogoutRedirectUris = { "https://localhost:7008/signout-callback-oidc", "http://localhost:5119/signout-callback-oidc" }, //Logout
                 AllowedScopes = new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
